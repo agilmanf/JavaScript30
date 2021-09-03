@@ -53,7 +53,7 @@
       position: relative;
       width: 100%;
       height: 100%;
-      transform: translateY(-3px); /* account for the height of the clock hands */
+      transform: translateY(-px); /* account for the height of the clock hands */
     }
 
     .hand {
@@ -62,12 +62,58 @@
       background: black;
       position: absolute;
       top: 50%;
+      transform-origin: 100%;
+      transform: rotateZ(90deg);
+
+      /* border-top:1px solid black;
+      border-bottom:1px solid black;
+      border-right:10px solid black; */
+    }
+
+    .second-hand {
+      background-color: red;
+      transform: rotateZ(70deg);
+    }
+
+    .min-hand {
+      width: 40%;
+      background-color: chartreuse;
+      transform-origin: 125%;
+      transform: rotateZ(200deg) translateX(25%);
+    }
+
+    .hour-hand {
+      width: 30%;
+      background-color: black;
+      transform-origin: 165%;
+      transform: rotateZ(120deg) translateX(65%);
     }
 
   </style>
 
   <script>
+    const secondHand = document.querySelector('.second-hand');
+    const minuteHand = document.querySelector('.min-hand');
+    const hourHand = document.querySelector('.hour-hand');
 
+    function Clock() {
+      let now = new Date();
+      let second = now.getSeconds();
+      let minute = now.getMinutes();
+      let hour = now.getHours();
+
+      let secondDeg = ((360/60) * second) + 90;
+      let minuteDeg = ((360/60) * minute) + 90;
+      let hourDeg = ((360/12) * hour) + 90;
+
+      console.log(minuteDeg);
+
+      secondHand.style.transform = `rotateZ(${secondDeg}deg)`;
+      minuteHand.style.transform = `rotateZ(${minuteDeg}deg) translateX(25%)`;
+      hourHand.style.transform = `rotateZ(${hourDeg}deg) translateX(65%)`;
+    }
+
+    setInterval(Clock,1000);
 
   </script>
 </body>
